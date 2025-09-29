@@ -1,13 +1,18 @@
 /**
- * Módulo de Testes - Oryum Nexus
- * Framework completo de testes: Unit, Integration, E2E, Performance, Security
+ * Nexus Testing Module - Enhanced Version
+ * Comprehensive testing framework with AI-powered test generation
+ * 
+ * @version 2.0.0
+ * @module Nexus/Testing
  */
 
-import jest from 'jest';
-import { Builder, By, until } from 'selenium-webdriver';
-import chrome from 'selenium-webdriver/chrome.js';
-import supertest from 'supertest';
-import autocannon from 'autocannon';
+const jest = require('jest');
+const { Builder, By, until } = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
+const supertest = require('supertest');
+const autocannon = require('autocannon');
+const fs = require('fs').promises;
+const path = require('path');
 import { ZAP } from 'zaproxy';
 import fs from 'fs/promises';
 import path from 'path';
