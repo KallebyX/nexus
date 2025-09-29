@@ -22,7 +22,11 @@
     "ai:docs": "node scripts/ai-docs-generator.js",
     "ai:tests": "node scripts/ai-test-generator.js",
     "security:check": "node scripts/security-checker.js",
-    "backup": "node scripts/backup.js"
+    "backup": "node scripts/backup.js",
+    "db:migrate": "node scripts/migrate.js",
+    "db:seed": "node scripts/seed.js",
+    "db:reset": "node scripts/reset-db.js",
+    "health:check": "node scripts/health-check.js"
   },
   "keywords": [
     "framework",

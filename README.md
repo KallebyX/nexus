@@ -12,9 +12,60 @@
 
 </div>
 
-## 🎯 Visão Geral
+# 🎯 Oryum Nexus Framework
 
-O Oryum Nexus é o framework modular da Oryum Tech que visa **reduzir o tempo de desenvolvimento em 40%**, padronizando arquitetura, UX/UI e operações DevOps. Organiza o pipeline em blocos reutilizáveis com **IA integrada** para automação de ponta a ponta.
+> **Framework Modular para Redução de 40% do Tempo de Desenvolvimento**
+
+## 🚀 Visão Geral
+
+O **Oryum Nexus** é um framework modular revolucionário projetado para acelerar o desenvolvimento de aplicações web modernas. Com uma arquitetura plug-and-play e automação inteligente, permite criar sistemas completos em **horas ao invés de semanas**.
+
+### ✨ Características Principais
+- 🧩 **Modularidade Total**: Componentes independentes e reutilizáveis
+- ⚡ **Zero Config**: Funciona out-of-the-box com configuração mínima
+- 🤖 **AI-First**: Automação inteligente em todo ciclo de desenvolvimento
+- 🔒 **Enterprise Ready**: Segurança, auditoria e escalabilidade nativas
+- 📱 **Full-Stack**: Frontend + Backend + Database + DevOps integrados
+
+---
+
+## 📋 Status do Projeto
+
+**🎯 Completude Atual: ~30%** *(Atualizado: 29/09/2025)*
+
+### ✅ Módulos Completos
+
+#### 🗄️ Database Module - **COMPLETO (100%)**
+Sistema completo de ORM enterprise com Sequelize:
+- ✅ Multi-database: PostgreSQL + Redis + MongoDB
+- ✅ BaseModel com UUID, timestamps, audit trails, soft deletes
+- ✅ **6 Modelos Completos**: User, UserSession, ActivityLog, Permission, Role, Setting
+- ✅ **RBAC System**: Roles hierárquicos com permissões granulares
+- ✅ **Audit Trail**: Logs automáticos de todas operações
+- ✅ **Migration System**: Scripts automatizados de migração e seeds
+- ✅ Health checks e monitoramento
+
+#### 🔐 Auth Module - **COMPLETO (100%)**
+Sistema completo de autenticação e autorização:
+- ✅ **AuthService**: JWT com refresh tokens, registro, login, logout
+- ✅ **AuthMiddleware**: 7+ middlewares de segurança (auth, authorize, roles, ownership, rate limiting)
+- ✅ **Password Security**: Validação, reset, políticas configuráveis
+- ✅ **Session Management**: Device tracking, cleanup automático
+- ✅ **Audit Integration**: Logs de tentativas de login, acessos negados
+
+#### 🎨 UI Module - **BÁSICO (25%)**
+- ✅ **Componentes**: Button, Input, Alert, Footer, LoginForm
+- ✅ **Hooks**: useAuth, useCart, useForm, useApi  
+- ✅ **Utilities**: Formatters, Validators, API helpers, Constants, Types
+
+### 🚧 Em Desenvolvimento
+- **API Module**: Express.js com integração completa aos módulos
+- **CLI Tools**: Ferramentas de linha de comando nexus
+- **Testing Module**: Framework de testes automatizado
+- **Payments Module**: Integração Stripe/Mercado Pago
+- **Notifications Module**: Email, SMS, Push, WhatsApp
+
+---
 
 ### ✨ Principais Benefícios
 
@@ -97,6 +148,82 @@ nexus/
 | 💳 **Payments** | Stripe, Mercado Pago | 🚧 Em desenvolvimento |
 | 📨 **Notifications** | Email, push, WhatsApp | 🚧 Em desenvolvimento |
 | 📈 **Monitoring** | Logs, métricas, alertas | ✅ Disponível |
+
+---
+
+## 🚀 Quick Start
+
+### 1. Instalação
+```bash
+# Clone o framework
+git clone https://github.com/oryum/nexus.git
+cd nexus
+
+# Instalar dependências
+npm install
+```
+
+### 2. Configuração do Banco
+```bash
+# Configurar PostgreSQL (necessário)
+export DATABASE_URL="postgresql://user:password@localhost:5432/nexus_dev"
+
+# Opcional: Redis para cache
+export REDIS_URL="redis://localhost:6379"
+
+# Executar migrações
+npm run db:migrate
+```
+
+### 3. Executar Exemplo
+```bash
+# Iniciar API demo
+node examples/api-demo.js
+
+# Acesse: http://localhost:3001/health
+```
+
+### 4. Uso em Projeto
+```javascript
+import { initializeDatabase, initializeAuthModule } from '@oryum/nexus';
+
+// Inicializar framework
+const db = await initializeDatabase();
+const auth = await initializeAuthModule();
+
+// Usar modelos
+const user = await db.User.create({
+  email: 'user@example.com',
+  password: 'secure123',
+  first_name: 'João'
+});
+
+// Usar autenticação
+const result = await auth.login('user@example.com', 'secure123');
+```
+
+### 5. API Endpoints Disponíveis
+```bash
+# Autenticação
+POST /api/auth/register    # Registro de usuário
+POST /api/auth/login       # Login
+POST /api/auth/logout      # Logout
+POST /api/auth/refresh     # Refresh token
+
+# Usuário
+GET  /api/profile          # Perfil (requer auth)
+
+# Admin (requer role admin)
+GET  /api/admin/users      # Listar usuários
+GET  /api/admin/logs       # Logs de auditoria
+GET  /api/admin/settings   # Configurações
+
+# Público
+GET  /health              # Status do sistema
+GET  /api/settings        # Configurações públicas
+```
+
+---
 
 ## 🛠️ Stack Tecnológica
 

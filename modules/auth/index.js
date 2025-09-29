@@ -1,228 +1,140 @@
 /**
- * Módulo de Autenticação - Oryum Nexus
- * Sistema completo de autenticação com JWT, OAuth e roles
+ * Auth Module - Sistema de Autenticação Completo
+ * Framework Nexus - Oryum
  */
 
-import jwt from 'jsonwebtoken';
-import { createClient } from '@supabase/supabase-js';
+import { AuthService, initializeAuth, getAuth } from './AuthService.js';
+import { AuthMiddleware, getAuthMiddleware, auth, authorize, requireRole, requireOwnership, optionalAuth, rateLimit, auditLog } from './AuthMiddleware.js';
 
 export class AuthModule {
   constructor(config = {}) {
-    this.config = {
-      provider: 'supabase',
-      socialLogin: ['google', 'github'],
-      jwt: true,
-      roles: ['admin', 'user'],
-      ...config
-    };
-
-    this.initializeProvider();
+    this.config = config;
+    this.service = null;
+    this.middleware = null;
+    this.isInitialized = false;
   }
 
-  initializeProvider() {
-    if (this.config.provider === 'supabase') {
-      this.supabase = createClient(
-        process.env.SUPABASE_URL,
-        process.env.SUPABASE_ANON_KEY
-      );
-    }
-  }
-
-  /**
-   * Middleware para Express.js
-   * Aplica autenticação automática nas rotas
-   */
-  middleware() {
-    return (req, res, next) => {
-      const token = req.headers.authorization?.replace('Bearer ', '');
+  async initialize() {
+    try {
+      console.log('🔐 Inicializando Auth Module...');
       
-      if (!token) {
-        return res.status(401).json({ error: 'Token não fornecido' });
-      }
-
-      try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
-        next();
-      } catch (error) {
-        return res.status(401).json({ error: 'Token inválido' });
-      }
-    };
-  }
-
-  /**
-   * Login com email e senha
-   */
-  async login(email, password) {
-    try {
-      const { data, error } = await this.supabase.auth.signInWithPassword({
-        email,
-        password
-      });
-
-      if (error) throw error;
-
-      const token = jwt.sign(
-        { 
-          id: data.user.id, 
-          email: data.user.email,
-          role: data.user.user_metadata?.role || 'user'
-        },
-        process.env.JWT_SECRET,
-        { expiresIn: '24h' }
-      );
-
-      return {
-        success: true,
-        token,
-        user: data.user,
-        expiresIn: '24h'
-      };
-
+      // Inicializar serviço de autenticação
+      this.service = await initializeAuth(this.config);
+      
+      // Inicializar middleware
+      this.middleware = await getAuthMiddleware();
+      
+      this.isInitialized = true;
+      console.log('✅ Auth Module inicializado com sucesso');
+      
+      return this;
     } catch (error) {
-      return {
-        success: false,
-        error: error.message
-      };
+      console.error('❌ Erro ao inicializar Auth Module:', error);
+      throw error;
     }
   }
 
-  /**
-   * Registro de novo usuário
-   */
-  async register(email, password, userData = {}) {
-    try {
-      const { data, error } = await this.supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            role: 'user',
-            ...userData
-          }
-        }
-      });
-
-      if (error) throw error;
-
-      return {
-        success: true,
-        user: data.user,
-        message: 'Usuário criado com sucesso'
-      };
-
-    } catch (error) {
-      return {
-        success: false,
-        error: error.message
-      };
-    }
+  // Métodos de conveniência para o serviço
+  async register(userData) {
+    return await this.service.register(userData);
   }
 
-  /**
-   * Login social (Google, GitHub)
-   */
-  async socialLogin(provider) {
-    try {
-      const { data, error } = await this.supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: process.env.AUTH_REDIRECT_URL
-        }
-      });
-
-      if (error) throw error;
-
-      return {
-        success: true,
-        url: data.url
-      };
-
-    } catch (error) {
-      return {
-        success: false,
-        error: error.message
-      };
-    }
+  async login(email, password, options = {}) {
+    return await this.service.login(email, password, options);
   }
 
-  /**
-   * Verificar permissões do usuário
-   */
-  hasPermission(user, permission) {
-    const rolePermissions = {
-      admin: ['read', 'write', 'delete', 'manage'],
-      user: ['read', 'write']
-    };
-
-    return rolePermissions[user.role]?.includes(permission) || false;
+  async logout(token, options = {}) {
+    return await this.service.logout(token, options);
   }
 
-  /**
-   * Middleware de autorização por role
-   */
-  requireRole(role) {
-    return (req, res, next) => {
-      if (!req.user || req.user.role !== role) {
-        return res.status(403).json({ 
-          error: 'Acesso negado: permissão insuficiente' 
-        });
-      }
-      next();
-    };
-  }
-
-  /**
-   * Logout e invalidação de token
-   */
-  async logout() {
-    try {
-      const { error } = await this.supabase.auth.signOut();
-      if (error) throw error;
-
-      return { success: true };
-    } catch (error) {
-      return {
-        success: false,
-        error: error.message
-      };
-    }
-  }
-
-  /**
-   * Refresh token
-   */
   async refreshToken(refreshToken) {
-    try {
-      const { data, error } = await this.supabase.auth.refreshSession({
-        refresh_token: refreshToken
-      });
+    return await this.service.refreshToken(refreshToken);
+  }
 
-      if (error) throw error;
+  async verifyToken(token) {
+    return await this.service.verifyToken(token);
+  }
 
-      const newToken = jwt.sign(
-        {
-          id: data.user.id,
-          email: data.user.email,
-          role: data.user.user_metadata?.role || 'user'
-        },
-        process.env.JWT_SECRET,
-        { expiresIn: '24h' }
-      );
+  async requestPasswordReset(email) {
+    return await this.service.requestPasswordReset(email);
+  }
 
-      return {
-        success: true,
-        token: newToken,
-        user: data.user
-      };
+  async resetPassword(token, newPassword) {
+    return await this.service.resetPassword(token, newPassword);
+  }
 
-    } catch (error) {
-      return {
-        success: false,
-        error: error.message
-      };
-    }
+  // Getters para middleware
+  get authenticate() {
+    return this.middleware.authenticate();
+  }
+
+  authorize(permission, options = {}) {
+    return this.middleware.authorize(permission, options);
+  }
+
+  requireRole(roles) {
+    return this.middleware.requireRole(roles);
+  }
+
+  requireOwnership(resourceParam, resourceModel) {
+    return this.middleware.requireOwnership(resourceParam, resourceModel);
+  }
+
+  get optionalAuth() {
+    return this.middleware.optionalAuth();
+  }
+
+  rateLimit(options = {}) {
+    return this.middleware.rateLimit(options);
+  }
+
+  auditLog(action, resourceType) {
+    return this.middleware.auditLog(action, resourceType);
+  }
+
+  // Health check
+  async healthCheck() {
+    return {
+      status: 'healthy',
+      service: this.service ? 'initialized' : 'not_initialized',
+      middleware: this.middleware ? 'initialized' : 'not_initialized',
+      timestamp: new Date()
+    };
   }
 }
+
+// Singleton instance
+let authModule = null;
+
+export async function initializeAuthModule(config = {}) {
+  if (!authModule) {
+    authModule = new AuthModule(config);
+    await authModule.initialize();
+  }
+  return authModule;
+}
+
+export async function getAuthModule() {
+  if (!authModule) {
+    throw new Error('Auth Module não foi inicializado. Chame initializeAuthModule() primeiro.');
+  }
+  return authModule;
+}
+
+// Exports diretos para conveniência
+export {
+  AuthService,
+  AuthMiddleware,
+  initializeAuth,
+  getAuth,
+  getAuthMiddleware,
+  auth,
+  authorize,
+  requireRole,
+  requireOwnership,
+  optionalAuth,
+  rateLimit,
+  auditLog
+};
 
 export default AuthModule;
