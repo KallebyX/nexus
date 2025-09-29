@@ -1,7 +1,145 @@
 /**
- * Módulo UI - Oryum Nexus
- * Biblioteca de componentes React reutilizáveis
+ * Nexus UI Module - Complete React Components Library
+ * Enterprise-grade components for rapid development
+ * 
+ * @version 2.0.0
+ * @module Nexus/UI
  */
+
+// Basic Components
+export { default as Button } from './components/Button.jsx';
+export { default as Input } from './components/Input.jsx';
+export { default as Alert } from './components/Alert.jsx';
+export { default as Footer } from './components/Footer.jsx';
+export { default as LoginForm } from './components/LoginForm.jsx';
+
+// Enhanced Components
+export { 
+  Button as EnhancedButton,
+  DataTable,
+  Modal,
+  FormBuilder,
+  Chart
+} from './enhanced-components.jsx';
+
+// Hooks
+export { default as useAuth } from './hooks/useAuth.js';
+export { default as useCart } from './hooks/useCart.js';
+export { default as useForm } from './hooks/useForm.js';
+export { default as useApi } from './hooks/useApi.js';
+
+// UI Configuration
+export const UIConfig = {
+  theme: {
+    colors: {
+      primary: '#3b82f6',
+      secondary: '#6b7280',
+      success: '#10b981',
+      warning: '#f59e0b',
+      danger: '#ef4444'
+    },
+    spacing: {
+      xs: '0.25rem',
+      sm: '0.5rem',
+      md: '1rem',
+      lg: '1.5rem',
+      xl: '3rem'
+    },
+    typography: {
+      fontFamily: 'Inter, system-ui, sans-serif',
+      fontSize: {
+        xs: '0.75rem',
+        sm: '0.875rem',
+        base: '1rem',
+        lg: '1.125rem',
+        xl: '1.25rem',
+        '2xl': '1.5rem'
+      }
+    }
+  },
+  components: {
+    button: {
+      defaultVariant: 'primary',
+      defaultSize: 'medium'
+    },
+    dataTable: {
+      defaultPageSize: 10,
+      defaultPagination: true
+    },
+    modal: {
+      defaultSize: 'medium',
+      closeOnEscape: true
+    }
+  }
+};
+
+// Component Factory
+export class UIFactory {
+  static createComponent(type, props) {
+    const components = {
+      button: EnhancedButton,
+      dataTable: DataTable,
+      modal: Modal,
+      form: FormBuilder,
+      chart: Chart
+    };
+    
+    const Component = components[type];
+    if (!Component) {
+      throw new Error(`Unknown component type: ${type}`);
+    }
+    
+    return Component;
+  }
+  
+  static createForm(schema, options = {}) {
+    return {
+      component: FormBuilder,
+      props: {
+        schema,
+        ...options
+      }
+    };
+  }
+  
+  static createDataTable(columns, data, options = {}) {
+    return {
+      component: DataTable,
+      props: {
+        columns,
+        data,
+        ...UIConfig.components.dataTable,
+        ...options
+      }
+    };
+  }
+}
+
+// Theme Provider Context (React components in separate files)
+export const createThemeProvider = (React) => {
+  const { createContext, useContext } = React;
+  const ThemeContext = createContext(UIConfig.theme);
+
+  const ThemeProvider = ({ children, theme = {} }) => {
+    const mergedTheme = { ...UIConfig.theme, ...theme };
+    
+    return React.createElement(
+      ThemeContext.Provider,
+      { value: mergedTheme },
+      children
+    );
+  };
+
+  const useTheme = () => {
+    const context = useContext(ThemeContext);
+    if (!context) {
+      throw new Error('useTheme must be used within a ThemeProvider');
+    }
+    return context;
+  };
+
+  return { ThemeProvider, useTheme, ThemeContext };
+};
 
 import React, { useState, useEffect } from 'react';
 
