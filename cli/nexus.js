@@ -252,25 +252,7 @@ program
     }
   });
 
-// Deploy command
-program
-  .command('deploy')
-  .description('Deploy project')
-  .option('-e, --env <environment>', 'Deployment environment', 'production')
-  .action(async (options) => {
-    const logger = createLogger();
-    
-    try {
-      logger.info(`Deploying to ${options.env}...`);
-      
-      // Add deployment logic here
-      logger.warn('Deployment command not implemented yet');
-      
-    } catch (error) {
-      logger.error('Deployment failed:', error.message);
-      process.exit(1);
-    }
-  });
+// Deploy command será adicionado no final do arquivo
 
 // Health check command
 program
@@ -451,6 +433,115 @@ function createLogger() {
     succeed: (msg) => console.log(chalk.green('✅'), msg)
   };
 }
+
+// Comando: nexus docker
+program
+  .command('docker')
+  .description('Comandos Docker e containerização')
+  .option('-i, --init', 'Inicializar arquivos Docker')
+  .option('-b, --build [name]', 'Construir imagem Docker')
+  .option('-r, --run', 'Executar containers com docker-compose')
+  .option('-s, --stop', 'Parar containers')
+  .option('-l, --logs [service]', 'Ver logs dos containers')
+  .action(async (options) => {
+    const logger = createLogger();
+    
+    try {
+      const { DockerModule } = await import('../modules/docker/index.js');
+      const docker = new DockerModule();
+
+      if (options.init) {
+        logger.info('Inicializando arquivos Docker...');
+        await docker.createDockerFiles('.');
+        logger.succeed('Arquivos Docker criados com sucesso!');
+        return;
+      }
+
+      if (options.build) {
+        const imageName = options.build === true ? 'nexus-app' : options.build;
+        logger.info(`Construindo imagem: ${imageName}...`);
+        await docker.buildImage(imageName);
+        return;
+      }
+
+      if (options.run) {
+        logger.info('Iniciando containers...');
+        await docker.runCompose();
+        return;
+      }
+
+      if (options.stop) {
+        logger.info('Parando containers...');
+        const { exec } = await import('child_process');
+        const { promisify } = await import('util');
+        const execAsync = promisify(exec);
+        await execAsync('docker-compose down');
+        logger.succeed('Containers parados');
+        return;
+      }
+
+      if (options.logs) {
+        const service = options.logs === true ? '' : options.logs;
+        logger.info(`Logs do container${service ? ` ${service}` : 's'}...`);
+        const { exec } = await import('child_process');
+        const { promisify } = await import('util');
+        const execAsync = promisify(exec);
+        const { stdout } = await execAsync(`docker-compose logs ${service}`);
+        console.log(stdout);
+        return;
+      }
+
+      // Se nenhuma opção foi fornecida, mostrar status
+      logger.info('Status dos containers Docker:');
+      const { exec } = await import('child_process');
+      const { promisify } = await import('util');
+      const execAsync = promisify(exec);
+      try {
+        const { stdout } = await execAsync('docker-compose ps');
+        console.log(stdout);
+      } catch (error) {
+        console.log('Nenhum container encontrado ou docker-compose não disponível');
+      }
+
+    } catch (error) {
+      logger.error('Erro nos comandos Docker:', error.message);
+      process.exit(1);
+    }
+  });
+
+// Comando: nexus deploy
+program
+  .command('deploy')
+  .description('Deploy automatizado para diferentes ambientes')
+  .argument('[environment]', 'Ambiente de deploy (development, staging, production)', 'development')
+  .option('--skip-tests', 'Pular execução de testes')
+  .option('--skip-build', 'Pular build da aplicação')
+  .option('--force', 'Forçar deploy sem confirmações')
+  .option('--rollback', 'Fazer rollback para versão anterior')
+  .action(async (environment, options) => {
+    const logger = createLogger();
+    
+    try {
+      const DeployManager = (await import('../scripts/deploy-manager.js')).default;
+      const deployer = new DeployManager();
+
+      if (options.rollback) {
+        logger.info(`Fazendo rollback para ${environment}...`);
+        await deployer.rollback(environment);
+      } else {
+        logger.info(`Iniciando deploy para ${environment}...`);
+        await deployer.deploy(environment, {
+          skipTests: options.skipTests,
+          skipBuild: options.skipBuild,
+          force: options.force
+        });
+      }
+
+    } catch (error) {
+      logger.error('Erro no deploy:', error.message);
+      process.exit(1);
+    }
+  });
 
 // Execute CLI
 if (import.meta.url === `file://${process.argv[1]}`) {

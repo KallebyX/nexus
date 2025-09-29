@@ -619,14 +619,15 @@ volumes:
         health.status = 'degraded';
       }
 
+      return health;
     } catch (error) {
-      health.status = 'unhealthy';
-      health.error = error.message;
+      return {
+        status: 'unhealthy',
+        timestamp: new Date().toISOString(),
+        error: error.message
+      };
     }
-
-    return health;
   }
 }
 
 export default MicroserviceTemplate;
-`;

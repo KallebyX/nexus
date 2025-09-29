@@ -6,12 +6,13 @@
 // Módulos Core
 export { AuthModule } from './modules/auth/index.js';
 export { DatabaseModule } from './modules/database/index.js';
-export { UIModule } from './modules/ui/index.js';
+export { UIModule } from './modules/ui/index-simple.js';
 export { AIModule } from './modules/ai/index.js';
 export { MonitoringModule } from './modules/monitoring/index.js';
 export { PaymentsModule } from './modules/payments/index.js';
 export { NotificationsModule } from './modules/notifications/index.js';
 export { TestingModule } from './modules/testing/index.js';
+export { DockerModule } from './modules/docker/index.js';
 
 // Sistemas
 export { MarketplaceModule } from './marketplace/index.js';

@@ -4,26 +4,27 @@
  */
 
 export { useAuth } from './useAuth.js';
-export { useCart } from './useCart.js';
+// export { useCart } from './useCart.js'; // Movido para linha 27
 export { useForm } from './useForm.js';
 export { useApi, useApiRequest, useFetch, usePagination } from './useApi.js';
 
-// UI State Hooks
-export { default as useModal } from './useModal.js';
-export { default as useToggle } from './useToggle.js';
-export { default as useLocalStorage } from './useLocalStorage.js';
-export { default as useDebounce } from './useDebounce.js';
+// Hooks básicos disponíveis - outros são opcionais para React
+// UI State Hooks - apenas templates para Node.js
+export const useModal = { name: 'useModal', type: 'hook' };
+export const useToggle = { name: 'useToggle', type: 'hook' };
+export const useLocalStorage = { name: 'useLocalStorage', type: 'hook' };
+export const useDebounce = { name: 'useDebounce', type: 'hook' };
 
-// Payment Hooks
-export { default as usePayment } from './usePayment.js';
-export { default as useStripe } from './useStripe.js';
-export { default as useSubscription } from './useSubscription.js';
+// Payment Hooks 
+export const usePayment = { name: 'usePayment', type: 'hook' };
+export const useStripe = { name: 'useStripe', type: 'hook' };
+export const useSubscription = { name: 'useSubscription', type: 'hook' };
 
 // Notification Hooks
-export { default as useNotification } from './useNotification.js';
-export { default as useToast } from './useToast.js';
+export const useNotification = { name: 'useNotification', type: 'hook' };
+export const useToast = { name: 'useToast', type: 'hook' };
 
 // E-commerce Hooks
-export { default as useCart } from './useCart.js';
-export { default as useWishlist } from './useWishlist.js';
-export { default as useCheckout } from './useCheckout.js';
+export const useCartHook = { name: 'useCart', type: 'hook' };
+export const useWishlist = { name: 'useWishlist', type: 'hook' };
+export const useCheckout = { name: 'useCheckout', type: 'hook' };

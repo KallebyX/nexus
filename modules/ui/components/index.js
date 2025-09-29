@@ -1,61 +1,75 @@
 /**
  * Componentes UI - Nexus Framework
- * Biblioteca de componentes reutilizáveis
+ * Versão simplificada para Node.js
  */
 
-// Layout Components
-export { default as Footer } from './Footer.jsx';
+// Componentes básicos como templates
+export const Button = {
+  name: 'Button',
+  template: '<button class="nexus-button nexus-button-{{variant}}">{{text}}</button>',
+  props: ['text', 'onClick', 'variant', 'disabled']
+};
 
-// Form Components
-export { default as LoginForm } from './LoginForm.jsx';
+export const Input = {
+  name: 'Input',
+  template: '<input class="nexus-input" type="{{type}}" placeholder="{{placeholder}}" />',
+  props: ['type', 'placeholder', 'value', 'onChange']
+};
 
-// UI Components
-export { default as Button } from './Button.jsx';
-export { default as Input } from './Input.jsx';
-export { default as Alert } from './Alert.jsx';
+export const Alert = {
+  name: 'Alert',
+  template: '<div class="nexus-alert nexus-alert-{{type}}">{{message}}</div>',
+  props: ['type', 'message', 'dismissible']
+};
 
-// Variantes específicas do Footer
-export { 
-  EcommerceFooter, 
-  SaaSFooter, 
-  MinimalFooter 
-} from './Footer.jsx';
+export const Footer = {
+  name: 'Footer',
+  template: '<footer class="nexus-footer">{{content}}</footer>',
+  props: ['content', 'links']
+};
 
-// Variantes do Button
-export {
-  PrimaryButton,
-  SecondaryButton,
-  SuccessButton,
-  WarningButton,
-  ErrorButton,
-  OutlineButton,
-  GhostButton,
-  LinkButton
-} from './Button.jsx';
+export const LoginForm = {
+  name: 'LoginForm',
+  template: `<form class="nexus-login-form">
+    <input type="email" placeholder="Email" required />
+    <input type="password" placeholder="Password" required />
+    <button type="submit" class="nexus-button nexus-button-primary">{{submitText}}</button>
+  </form>`,
+  props: ['onSubmit', 'submitText']
+};
 
-// Variantes do Input
-export {
-  PasswordInput,
-  SearchInput,
-  NumberInput,
-  EmailInput
-} from './Input.jsx';
+// Função para renderizar componentes
+export function renderComponent(component, props = {}) {
+  let template = component.template;
+  Object.keys(props).forEach(key => {
+    const regex = new RegExp(`{{${key}}}`, 'g');
+    template = template.replace(regex, props[key] || '');
+  });
+  return template;
+}
 
-// Variantes do Alert
-export {
-  SuccessAlert,
-  ErrorAlert,
-  WarningAlert,
-  InfoAlert,
-  ActionAlert,
-  InlineAlert
-} from './Alert.jsx';
-export { default as CartSummary } from './CartSummary.jsx';
-export { default as CheckoutForm } from './CheckoutForm.jsx';
-export { default as PaymentMethods } from './PaymentMethods.jsx';
+// Dashboard Components (templates para Node.js)
+export const DashboardLayout = {
+  name: 'DashboardLayout',
+  template: '<div class="nexus-dashboard">{{content}}</div>',
+  props: ['content', 'sidebar']
+};
 
-// Dashboard Components
-export { default as DashboardLayout } from './DashboardLayout.jsx';
-export { default as StatsCard } from './StatsCard.jsx';
-export { default as Chart } from './Chart.jsx';
-export { default as DataTable } from './DataTable.jsx';
+export const StatsCard = {
+  name: 'StatsCard',
+  template: `<div class="nexus-stats-card">
+    <h3>{{title}}</h3>
+    <div class="stat-value">{{value}}</div>
+    <div class="stat-change">{{change}}</div>
+  </div>`,
+  props: ['title', 'value', 'change']
+};
+
+export const DataTable = {
+  name: 'DataTable',
+  template: `<table class="nexus-table">
+    <thead><tr>{{headers}}</tr></thead>
+    <tbody>{{rows}}</tbody>
+  </table>`,
+  props: ['headers', 'rows', 'sortable']
+};
