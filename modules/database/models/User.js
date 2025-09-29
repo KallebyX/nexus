@@ -5,7 +5,7 @@
 
 import { DataTypes } from 'sequelize';
 import bcrypt from 'bcryptjs';
-import { BaseModel } from './BaseModel.js';
+import { BaseModel } from '../BaseModel.js';
 
 export class User extends BaseModel {
   static init(sequelize) {
