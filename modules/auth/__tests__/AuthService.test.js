@@ -58,12 +58,12 @@ describe('initializeAuth', () => {
     try {
       const result = await initializeAuth();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('getAuth', () => {
   test('should be defined', () => {
@@ -75,10 +75,10 @@ describe('getAuth', () => {
     try {
       const result = await getAuth();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 

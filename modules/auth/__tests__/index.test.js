@@ -50,12 +50,12 @@ describe('initializeAuthModule', () => {
     try {
       const result = await initializeAuthModule();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('getAuthModule', () => {
   test('should be defined', () => {
@@ -67,12 +67,12 @@ describe('getAuthModule', () => {
     try {
       const result = await getAuthModule();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('index Middleware', () => {
   test('should process requests correctly', () => {

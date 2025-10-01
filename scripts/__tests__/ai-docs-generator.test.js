@@ -4,7 +4,7 @@
  */
 
 import { jest } from '@jest/globals';
-import {{ render, screen, fireEvent }} from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 describe('AIDocsGenerator', () => {

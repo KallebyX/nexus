@@ -4,7 +4,7 @@
  */
 
 import { jest } from '@jest/globals';
-import { UserSession } from '../../modules/database/models/UserSession.js';
+import { UserSession } from '../models/UserSession.js';
 
 describe('UserSession', () => {
   let instance;

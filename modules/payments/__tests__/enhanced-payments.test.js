@@ -5,7 +5,7 @@
 
 import { jest } from '@jest/globals';
 import request from 'supertest';
-import { PaymentsModule } from '../../modules/payments/enhanced-payments.js';
+import { PaymentsModule } from '../enhanced-payments.js';
 
 describe('PaymentsModule', () => {
   let instance;

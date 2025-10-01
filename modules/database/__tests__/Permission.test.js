@@ -4,7 +4,7 @@
  */
 
 import { jest } from '@jest/globals';
-import { Permission } from '../../modules/database/models/Permission.js';
+import { Permission } from '../models/Permission.js';
 
 describe('Permission', () => {
   let instance;

@@ -5,7 +5,7 @@
 
 import { jest } from '@jest/globals';
 import request from 'supertest';
-import { MonitoringModule } from '../../modules/monitoring/index.js';
+import { MonitoringModule } from '../index.js';
 
 describe('MonitoringModule', () => {
   let instance;

@@ -1,6 +1,9 @@
 /**
  * User Model - Nexus Framework
- * Modelo de usuário com autenticação e perfis
+ * Modelo de usuário co        validate: {
+          isEmail: true,
+          is: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        }utenticação e perfis
  */
 
 import { DataTypes } from 'sequelize';

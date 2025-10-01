@@ -5,9 +5,9 @@
 
 import { jest } from '@jest/globals';
 import request from 'supertest';
-import {{ render, screen, fireEvent }} from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { TestingModule } from '../../modules/testing/index.js';
+import { TestingModule } from '../index.js';
 
 describe('TestingModule', () => {
   let instance;

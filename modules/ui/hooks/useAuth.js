@@ -1,9 +1,9 @@
 /**
- * Hook useAuth - Nexus UI
- * Hook para gerenciamento de autenticação
+ * Nexus useAuth Hook - Advanced Authentication Management
+ * Complete authentication system with React context
  */
 
-import { useState, useEffect, useContext, createContext } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 // Context de autenticação
 export const AuthContext = createContext(null);

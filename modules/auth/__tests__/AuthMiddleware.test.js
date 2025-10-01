@@ -58,12 +58,12 @@ describe('getAuthMiddleware', () => {
     try {
       const result = await getAuthMiddleware();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('auth', () => {
   test('should be defined', () => {
@@ -75,12 +75,12 @@ describe('auth', () => {
     try {
       const result = await auth();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('authorize', () => {
   test('should be defined', () => {
@@ -92,12 +92,12 @@ describe('authorize', () => {
     try {
       const result = await authorize();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('requireRole', () => {
   test('should be defined', () => {
@@ -109,12 +109,12 @@ describe('requireRole', () => {
     try {
       const result = await requireRole();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('requireOwnership', () => {
   test('should be defined', () => {
@@ -126,12 +126,12 @@ describe('requireOwnership', () => {
     try {
       const result = await requireOwnership();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('AuthMiddleware Middleware', () => {
   test('should process requests correctly', () => {

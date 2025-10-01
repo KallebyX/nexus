@@ -4,7 +4,7 @@
  */
 
 import { jest } from '@jest/globals';
-import { ActivityLog } from '../../modules/database/models/ActivityLog.js';
+import { ActivityLog } from '../models/ActivityLog.js';
 
 describe('ActivityLog', () => {
   let instance;

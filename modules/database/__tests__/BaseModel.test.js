@@ -4,7 +4,7 @@
  */
 
 import { jest } from '@jest/globals';
-import { BaseModel } from '../../modules/database/BaseModel.js';
+import { BaseModel } from '../BaseModel.js';
 
 describe('BaseModel', () => {
   let instance;

@@ -1,6 +1,14 @@
 /**
  * Tests for index
- * Generated automatically by Nexus Test Generator
+ * Generated automatic  test('should execute without errors', async () => {
+    try {
+      const result = await initializeApi();
+      expect(result).toBeDefined();
+    } catch (error) {
+      // Handle expected errors
+      console.log('Function execution test:', error.message);
+    }
+  });exus Test Generator
  */
 
 import { jest } from '@jest/globals';
@@ -47,12 +55,12 @@ describe('initializeApi', () => {
     try {
       const result = await initializeApi();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('getApi', () => {
   test('should be defined', () => {
@@ -64,12 +72,12 @@ describe('getApi', () => {
     try {
       const result = await getApi();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('index Express App', () => {
   test('should handle HTTP requests', async () => {

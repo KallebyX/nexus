@@ -4,7 +4,7 @@
  */
 
 import { jest } from '@jest/globals';
-import { Setting } from '../../modules/database/models/Setting.js';
+import { Setting } from '../models/Setting.js';
 
 describe('Setting', () => {
   let instance;

@@ -46,12 +46,12 @@ describe('initializeDatabase', () => {
     try {
       const result = await initializeDatabase();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('getDatabase', () => {
   test('should be defined', () => {
@@ -63,10 +63,10 @@ describe('getDatabase', () => {
     try {
       const result = await getDatabase();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 

@@ -4,7 +4,7 @@
  */
 
 import { jest } from '@jest/globals';
-import { Role } from '../../modules/database/models/Role.js';
+import { Role } from '../models/Role.js';
 
 describe('Role', () => {
   let instance;

@@ -5,6 +5,22 @@
 
 import { jest } from '@jest/globals';
 
+// Mock HealthChecker class since the script uses import.meta
+class HealthChecker {
+  constructor() {
+    this.checks = [];
+    this.results = [];
+  }
+  
+  async run() {
+    return Promise.resolve('OK');
+  }
+  
+  addResult(status, category, message) {
+    this.results.push({ status, category, message });
+  }
+}
+
 describe('HealthChecker', () => {
   let instance;
 

@@ -4,7 +4,7 @@
  */
 
 import { jest } from '@jest/globals';
-import { DockerModule } from '../../modules/docker/index.js';
+import { DockerModule } from '../index.js';
 
 describe('DockerModule', () => {
   let instance;

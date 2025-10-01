@@ -4,7 +4,7 @@
  */
 
 import { jest } from '@jest/globals';
-import {{ render, screen, fireEvent }} from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { UIFactory } from '../../modules/ui/index.js';
 import { createThemeProvider, useAuth, Button, Card, Input } from '../../modules/ui/index.js';
@@ -40,12 +40,12 @@ describe('createThemeProvider', () => {
     try {
       const result = await createThemeProvider();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('useAuth', () => {
   test('should be defined', () => {
@@ -57,12 +57,12 @@ describe('useAuth', () => {
     try {
       const result = await useAuth();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('Button', () => {
   test('should be defined', () => {
@@ -74,12 +74,12 @@ describe('Button', () => {
     try {
       const result = await Button();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('Card', () => {
   test('should be defined', () => {
@@ -91,12 +91,12 @@ describe('Card', () => {
     try {
       const result = await Card();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('Input', () => {
   test('should be defined', () => {
@@ -108,12 +108,12 @@ describe('Input', () => {
     try {
       const result = await Input();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('index React Component', () => {
   test('should render without crashing', () => {

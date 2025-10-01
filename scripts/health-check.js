@@ -120,6 +120,9 @@ class HealthChecker {
   }
 }
 
+// Export for testing
+export { HealthChecker };
+
 // Executar verificação
 const checker = new HealthChecker();
 checker.run().catch(console.error);

@@ -5,7 +5,7 @@
 
 import { jest } from '@jest/globals';
 import request from 'supertest';
-import { NotificationsModule } from '../../modules/notifications/index.js';
+import { NotificationsModule } from '../index.js';
 
 describe('NotificationsModule', () => {
   let instance;

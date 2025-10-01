@@ -4,7 +4,7 @@
  */
 
 import { jest } from '@jest/globals';
-import {{ render, screen, fireEvent }} from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useApi, useApiRequest, useFetch, usePagination } from '../../modules/ui/hooks/useApi.js';
 
@@ -18,12 +18,12 @@ describe('useApi', () => {
     try {
       const result = await useApi();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('useApiRequest', () => {
   test('should be defined', () => {
@@ -35,12 +35,12 @@ describe('useApiRequest', () => {
     try {
       const result = await useApiRequest();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('useFetch', () => {
   test('should be defined', () => {
@@ -52,12 +52,12 @@ describe('useFetch', () => {
     try {
       const result = await useFetch();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('usePagination', () => {
   test('should be defined', () => {
@@ -69,12 +69,12 @@ describe('usePagination', () => {
     try {
       const result = await usePagination();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('useApi React Component', () => {
   test('should render without crashing', () => {

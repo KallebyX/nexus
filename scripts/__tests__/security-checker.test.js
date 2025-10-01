@@ -1,11 +1,13 @@
 /**
- * Tests for security-checker
+ import { jest } from '@jest/globals';
+import request from 'supertest';
+import { SecurityChecker } from '../security-checker.js';mport SecurityChecker from '../security-checker.js';ests for security-checker
  * Generated automatically by Nexus Test Generator
  */
 
 import { jest } from '@jest/globals';
 import request from 'supertest';
-import { SecurityChecker } from './security-checker';
+import { SecurityChecker } from './security-checker.js';
 
 describe('SecurityChecker', () => {
   let instance;

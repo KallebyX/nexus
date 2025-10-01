@@ -4,7 +4,7 @@
  */
 
 import { jest } from '@jest/globals';
-import {{ render, screen, fireEvent }} from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useForm } from '../../modules/ui/hooks/useForm.js';
 
@@ -18,12 +18,12 @@ describe('useForm', () => {
     try {
       const result = await useForm();
       expect(result).toBeDefined();
-    }} catch (error) {{
+    } catch (error) {
       // Handle expected errors
       console.log('Function execution test:', error.message);
-    }}
-  }});
-}});
+    }
+  });
+});
 
 describe('useForm React Component', () => {
   test('should render without crashing', () => {

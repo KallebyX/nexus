@@ -1,10 +1,11 @@
 /**
- * Tests for deploy-manager
+ import { jest } from '@jest/globals';
+import { DeployManager } from '../deploy-manager.js';mport DeployManager from '../deploy-manager.js';Tests for deploy-manager
  * Generated automatically by Nexus Test Generator
  */
 
 import { jest } from '@jest/globals';
-import { DeployManager } from './deploy-manager';
+import { DeployManager } from '../deploy-manager.js';
 
 describe('DeployManager', () => {
   let instance;

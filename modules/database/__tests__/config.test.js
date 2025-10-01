@@ -4,7 +4,7 @@
  */
 
 import { jest } from '@jest/globals';
-import { DatabaseConfig } from '../../modules/database/config.js';
+import { DatabaseConfig } from '../config.js';
 
 describe('DatabaseConfig', () => {
   let instance;
