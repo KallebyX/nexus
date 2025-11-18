@@ -6,8 +6,8 @@
 import { jest } from '@jest/globals';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { UIFactory } from '../../modules/ui/index.js';
-import { createThemeProvider, useAuth, Button, Card, Input } from '../../modules/ui/index.js';
+import { UIFactory } from '../index.js';
+import { createThemeProvider, useAuth, Button, Card, Input } from '../index.js';
 
 describe('UIFactory', () => {
   let instance;

@@ -6,7 +6,7 @@
 import { jest } from '@jest/globals';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { useApi, useApiRequest, useFetch, usePagination } from '../../modules/ui/hooks/useApi.js';
+import { useApi, useApiRequest, useFetch, usePagination } from '../hooks/useApi.js';
 
 describe('useApi', () => {
   test('should be defined', () => {

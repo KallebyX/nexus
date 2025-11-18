@@ -13,8 +13,8 @@
 
 import { jest } from '@jest/globals';
 import request from 'supertest';
-import { ApiModule } from '../../modules/api/index.js';
-import { initializeApi, getApi } from '../../modules/api/index.js';
+import { ApiModule } from '../index.js';
+import { initializeApi, getApi } from '../index.js';
 
 describe('ApiModule', () => {
   let instance;
