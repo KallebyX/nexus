@@ -4,8 +4,8 @@
  */
 
 import { jest } from '@jest/globals';
-import { AuthMiddleware } from '../../modules/auth/AuthMiddleware.js';
-import { getAuthMiddleware, auth, authorize, requireRole, requireOwnership } from '../../modules/auth/AuthMiddleware.js';
+import { AuthMiddleware } from '../AuthMiddleware.js';
+import { getAuthMiddleware, auth, authorize, requireRole, requireOwnership } from '../AuthMiddleware.js';
 
 describe('AuthMiddleware', () => {
   let instance;

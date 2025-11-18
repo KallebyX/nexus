@@ -4,8 +4,8 @@
  */
 
 import { jest } from '@jest/globals';
-import { AuthModule } from '../../modules/auth/index.js';
-import { initializeAuthModule, getAuthModule } from '../../modules/auth/index.js';
+import { AuthModule } from '../index.js';
+import { initializeAuthModule, getAuthModule } from '../index.js';
 
 describe('AuthModule', () => {
   let instance;

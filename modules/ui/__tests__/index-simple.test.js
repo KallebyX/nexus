@@ -6,7 +6,7 @@
 import { jest } from '@jest/globals';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { UIModule } from '../../modules/ui/index-simple.js';
+import { UIModule } from '../index-simple.js';
 
 describe('UIModule', () => {
   let instance;

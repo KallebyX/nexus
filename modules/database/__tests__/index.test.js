@@ -4,8 +4,8 @@
  */
 
 import { jest } from '@jest/globals';
-import { DatabaseModule } from '../../modules/database/index.js';
-import { initializeDatabase, getDatabase } from '../../modules/database/index.js';
+import { DatabaseModule } from '../index.js';
+import { initializeDatabase, getDatabase } from '../index.js';
 
 describe('DatabaseModule', () => {
   let instance;

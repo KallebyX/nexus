@@ -6,7 +6,7 @@
 import { jest } from '@jest/globals';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { useForm } from '../../modules/ui/hooks/useForm.js';
+import { useForm } from '../hooks/useForm.js';
 
 describe('useForm', () => {
   test('should be defined', () => {

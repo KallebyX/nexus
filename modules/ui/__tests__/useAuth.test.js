@@ -6,7 +6,7 @@
 import { jest } from '@jest/globals';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { AuthProvider } from '../../modules/ui/hooks/useAuth.js';
+import { AuthProvider } from '../hooks/useAuth.js';
 
 describe('AuthProvider', () => {
   test('should be defined', () => {
