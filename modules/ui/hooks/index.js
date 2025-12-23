@@ -1,30 +1,40 @@
 /**
  * Hooks - Nexus Framework
- * Hooks React reutilizáveis
+ * Complete React Hooks Library
+ *
+ * @module Nexus/UI/Hooks
+ * @version 2.0.0
  */
 
-export { useAuth } from './useAuth.js';
-// export { useCart } from './useCart.js'; // Movido para linha 27
+// Authentication Hook
+export { default as useAuth, AuthProvider, AuthContext } from './useAuth.js';
+
+// Form Management Hook
 export { useForm } from './useForm.js';
+
+// API & Data Fetching Hooks
 export { useApi, useApiRequest, useFetch, usePagination } from './useApi.js';
 
-// Hooks básicos disponíveis - outros são opcionais para React
-// UI State Hooks - apenas templates para Node.js
-export const useModal = { name: 'useModal', type: 'hook' };
-export const useToggle = { name: 'useToggle', type: 'hook' };
-export const useLocalStorage = { name: 'useLocalStorage', type: 'hook' };
-export const useDebounce = { name: 'useDebounce', type: 'hook' };
+// State Management Hooks
+export { default as useLocalStorage } from './useLocalStorage.js';
+export { default as useToggle } from './useToggle.js';
+export { default as useModal } from './useModal.js';
 
-// Payment Hooks 
-export const usePayment = { name: 'usePayment', type: 'hook' };
-export const useStripe = { name: 'useStripe', type: 'hook' };
-export const useSubscription = { name: 'useSubscription', type: 'hook' };
+// Performance Hooks
+export { default as useDebounce, useDebouncedCallback, useThrottle } from './useDebounce.js';
 
 // Notification Hooks
-export const useNotification = { name: 'useNotification', type: 'hook' };
-export const useToast = { name: 'useToast', type: 'hook' };
+export { default as useToast } from './useToast.js';
+export { default as useNotification } from './useNotification.js';
 
-// E-commerce Hooks
-export const useCartHook = { name: 'useCart', type: 'hook' };
-export const useWishlist = { name: 'useWishlist', type: 'hook' };
-export const useCheckout = { name: 'useCheckout', type: 'hook' };
+// E-commerce Hook
+export { default as useCart } from './useCart.js';
+
+// Payment Hooks (placeholders - implement with payment provider)
+export const usePayment = { name: 'usePayment', type: 'hook', description: 'Hook for payment processing' };
+export const useStripe = { name: 'useStripe', type: 'hook', description: 'Hook for Stripe integration' };
+export const useSubscription = { name: 'useSubscription', type: 'hook', description: 'Hook for subscription management' };
+
+// Additional E-commerce Hooks (placeholders)
+export const useWishlist = { name: 'useWishlist', type: 'hook', description: 'Hook for wishlist management' };
+export const useCheckout = { name: 'useCheckout', type: 'hook', description: 'Hook for checkout flow' };

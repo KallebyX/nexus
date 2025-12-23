@@ -7,18 +7,25 @@ export default {
   "coverageDirectory": "coverage",
   "coverageReporters": [
     "text",
-    "lcov", 
+    "lcov",
     "html"
   ],
   "testMatch": [
-    "**/__tests__/**/*.js",
+    "**/__tests__/**/*.test.js",
     "**/?(*.)+(spec|test).js"
+  ],
+  "testPathIgnorePatterns": [
+    "/node_modules/",
+    "/__tests__/helpers/",
+    "/__tests__/mocks/",
+    "/__tests__/fixtures/"
   ],
   "coveragePathIgnorePatterns": [
     "/node_modules/",
     "/coverage/",
     "/.git/",
-    "/docs/"
+    "/docs/",
+    "/__tests__/"
   ],
   "setupFilesAfterEnv": [
     "<rootDir>/jest.setup.js"
@@ -26,7 +33,7 @@ export default {
   "verbose": true,
   "collectCoverageFrom": [
     "modules/**/*.js",
-    "scripts/**/*.js", 
+    "scripts/**/*.js",
     "cli/**/*.js",
     "utils/**/*.js",
     "!**/__tests__/**",
