@@ -398,12 +398,14 @@ export class AuthService {
         resource_id: user.id,
         details: { email }
       });
-      
-      // TODO: Enviar email com token
-      
+
+      // Enviar email com token de reset
+      await this.sendPasswordResetEmail(user, resetToken);
+
       return {
         success: true,
-        resetToken, // Remover em produção - apenas para desenvolvimento
+        // Em produção, não retornar o token - apenas para desenvolvimento/testes
+        ...(process.env.NODE_ENV === 'development' && { resetToken }),
         message: 'Instruções de reset enviadas por email'
       };
       
@@ -472,11 +474,98 @@ export class AuthService {
       'h': 3600000,
       'd': 86400000
     };
-    
+
     const match = timeString.match(/^(\d+)([smhd])$/);
     if (!match) return 86400000; // 1 dia padrão
-    
+
     return parseInt(match[1]) * units[match[2]];
+  }
+
+  // Enviar email de reset de senha
+  async sendPasswordResetEmail(user, resetToken) {
+    try {
+      // Importar módulo de notificações dinamicamente
+      const { NotificationsModule } = await import('../notifications/index.js');
+      const notifications = new NotificationsModule();
+
+      const resetUrl = `${process.env.APP_URL || 'http://localhost:3000'}/auth/reset-password?token=${resetToken}`;
+      const appName = process.env.APP_NAME || 'Nexus';
+
+      await notifications.sendEmail({
+        to: user.email,
+        template: 'password-reset',
+        templateData: {
+          userName: user.first_name || user.email.split('@')[0],
+          appName,
+          resetUrl
+        }
+      });
+
+      console.log(`Email de reset de senha enviado para: ${user.email}`);
+      return true;
+    } catch (error) {
+      console.error('Erro ao enviar email de reset:', error);
+      // Não propagar erro - o reset token já foi salvo
+      // O usuário pode solicitar reenvio se necessário
+      return false;
+    }
+  }
+
+  // Enviar email de boas-vindas
+  async sendWelcomeEmail(user) {
+    try {
+      const { NotificationsModule } = await import('../notifications/index.js');
+      const notifications = new NotificationsModule();
+
+      const loginUrl = `${process.env.APP_URL || 'http://localhost:3000'}/auth/login`;
+      const appName = process.env.APP_NAME || 'Nexus';
+
+      await notifications.sendEmail({
+        to: user.email,
+        template: 'welcome',
+        templateData: {
+          userName: user.first_name || user.email.split('@')[0],
+          appName,
+          loginUrl
+        }
+      });
+
+      console.log(`Email de boas-vindas enviado para: ${user.email}`);
+      return true;
+    } catch (error) {
+      console.error('Erro ao enviar email de boas-vindas:', error);
+      return false;
+    }
+  }
+
+  // Enviar código de verificação por SMS
+  async sendVerificationCode(user, phone) {
+    try {
+      const { NotificationsModule } = await import('../notifications/index.js');
+      const notifications = new NotificationsModule();
+
+      // Gerar código de 6 dígitos
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      const codeExpires = new Date(Date.now() + 600000); // 10 minutos
+
+      // Salvar código no usuário
+      await user.update({
+        verification_code: code,
+        verification_code_expires: codeExpires
+      });
+
+      await notifications.sendSMS({
+        to: phone,
+        template: 'verification-code',
+        templateData: { code }
+      });
+
+      console.log(`Código de verificação enviado para: ${phone}`);
+      return { success: true, message: 'Código enviado com sucesso' };
+    } catch (error) {
+      console.error('Erro ao enviar código de verificação:', error);
+      throw error;
+    }
   }
 }
 
